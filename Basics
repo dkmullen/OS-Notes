@@ -1,0 +1,63 @@
+Powershell
+- ls
+- Get-Help ls
+- Get-Help ls -Full
+- ls -Force (show hidden)
+- pwd
+- cd ..\Desktop = go up one, then to desktop
+- ~ shortcut for home on win too
+- mkdir 'my cool folder'
+CTRL-R allows searching history (Linux too)
+cp -Recurse -Verbose
+rm -Force -Recurse
+cat
+cat <fliename> -Head 10 - first 10 lines (or -Tail)
+more (pauses) - use ENTER to advance by line, SPACE by page
+q to quit
+start notepad++ <filename> to start from cli
+Get-Alias ls (reveals the PowerShell command behind the alias) in this case, Get-Children) [PS only seems to use similar commands to bash/zsh/etc; but these are aliased native PS commands]
+Windows search service indexes files on a schedule - often disabled on servers, and enabled for your home dir on a Pc (it's resource intensive) By default, you can search for name, path, last-modified, size etc, but not inside files.
+Change this by Start, type 'indexing' click Indexing > Users > Advanced, Files Type tab -> Index Props -> File Contents
+Then search via explorer (search at top)
+NotePad ++ (open and use ctrl-shft-F) has good file search across files
+sls - (Select-String) - search from command line
+c:\'Program Files\' -Recurse -Filter *.exe - a more advanced search, for exe files in programs dir
+echo woof > dog.txt - creates a file (dog.txt) which contains 'woof'
+echo is alias for Write-Output
+stdin stdout stderr - each process has these three streams - stdin is what I type (for example); stdout is shown on the screen or (as in the echo cmd above, saved to file via >, a redirector operator)
+> overwrites, >> appends
+| sends output of one command to input of another
+cat words.txt | sls st - takes the content of words.txt (stdout of cat) and pipes them thru sls (Select-String), ie returns words that contain 'st'
+cat words.txt | sls st > new_file.txt - save the above to new file
+stdout (1) and stderr(2) are numbered, and if we want to redirect stderr (error messages) it would be cat words.txt | sls st 2> err_file.txt
+Or throw away err messages with 2> $null
+Get-help about_redirection
+
+Linux
+/ = root
+In root...
+/bin - essential binaries and programs - sim to Windows Program Files dir
+/etc - important program configs
+/home - personal users dir
+/proc - info about currently running processes
+/user - for user-installed software
+/bar - system logs and other files that constantly change
+
+ls --help
+man ls
+cat
+less
+- up and down arrows pg up and down, g goes to start, G goes to end
+/cookies to search the text for 'cookies'
+q to quit
+head <filename> also tail
+absolute path starts from root, relative starts from current
+nano <filename> ctrl x to exit (save)?
+grep <term> <filename>
+grep cow *_animals (works for farm_animals, ranch_animals)
+< is the stdin redirector ie cat < my_file.txt
+pushing to null is similar to windows, but /dev/null instead of $null
+
+
+cmd.exe
+/? - get help
