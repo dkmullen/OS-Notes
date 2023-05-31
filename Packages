@@ -1,0 +1,63 @@
+Software packages
+
+PE format (Portable Executable)
+
+EXE files might contain an...
+
+MSI file. A Microsoft install package or MSI is used to guide a program called the Windows installer in the installation, maintenance and removal of programs on the Windows operating system.
+
+An EXE might make use of Window's built-in installer or it might contain a custom installer
+
+Software in the Windows Store use a format called APPX to package their content
+
+To install in PS, go to the dir where the EXE is and type its name, or type the absolute path to it
+
+Archive in PS - Compress Archive -Path <source path> <destination path>
+
+Often, the /?, /h, and /help switches will give some insight into what options the installer provides. 
+
+DLL - dynamic link libraries - dependencies
+
+An installer will have the main code, dependencies and an msi (above) with instructions on how to put them together and remove them later.
+
+What about when you install updates and something stops working due to new versions of dependencies? 
+On modern Windows operating systems though, DLL hell is a problem of the past. To fix it, most shared libraries and resources in Windows are managed by something called side-by-side assemblies or SXS. Most of these shared libraries are stored in a folder at c\windows\winsxs. If an application needs to use a shared library to perform a task, that library will be specified in something called a manifest. This tells Windows to load the appropriate library from the SXS folder. The SXS system also supports access to multiple versions of the same shared library automatically. When you install software, you don't pull the rug out from underneath the programs you've already got. In addition to manifest, the SSX system and installers bundle dependencies together in their installation packages.
+
+commandlet - the name for PS commands that use the noun-verb format ie Find-Package
+Register-PackageSource -Name -ProviderName -Location
+
+Device Manager - devmgmt.msc or click on right This Computer, click Device Manager
+
+Linux
+.deb use dpkg command - sudo dpkg -i my_new_program.deb or remove with sudo dpkg -r my_new_program
+dpkg -l to list
+dpkg -l | atom  - search for a package called atom
+
+tar -cf new.tar file1 file2 me_file - tar stands for tape archive! -cf - c says make a new tar file and f says that the next argument will be the name of the new file
+
+sudo apt install gimp
+repositories source file is /etc/apt/sources.list
+
+ppas - personal package archives hosted on Launchpad servers, owned by Canonical - Allow devs to distrubute packages and update them automatically, but there are more security concerns
+
+should run sudo apt update and sudo apt upgrade regularly - update keeps the list fresh, upgrade upgrades out-of-date packages
+
+linux considers everything a file, even devices, which it stores in /dev
+character devices transmit data character by char (keyboard, mouse)
+Block devices (Drives) deliver blocks of data
+The first bit in ls -l shows the type of 'file' - dash for regular, d for directory, b for block, c for character
+if you ls -l /dev you might see devices like sda sdb etc, sd is for mass storage devices - the a, b, etc is just the order in which the computer detected them
+
+kernel modules extend the k's functionality for devices
+uname -r shows the kernel version
+sudo apt full-upgrade upgrades the kernel too
+
+The kernel has four main jobs:
+
+Memory management tracks how much memory is being used by what and where it is stored. 
+
+Process management determines which processes can use the central processing unit (CPU), when, and for how long.
+
+Device drivers act as an interpreter between the hardware and processes.
+
+System calls and security receives requests for service from the processes.
