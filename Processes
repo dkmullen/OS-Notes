@@ -1,0 +1,98 @@
+Processes
+Programs are things we can run; processes are running programs. A word processor spins up many processes; processes consume resources and can run amok, consuming too many.
+
+Each process has a process ID
+The kernel decides which resources to give it
+Background processes or daemons schedule resources, handle logging, manage networks, etc
+
+Windows - on boot, the first non-kernel user mode that starts is Session Manager Subsystem, or smss.exe. 
+smss.exe - Sets up some stuff, then kicks off the login process...
+windlogon.exe - along with ..
+csrss.exe - client server runtime subsystem called csrss.exe w/c handles the gui and cli
+
+Windows creates processes parent to child - parent tells OS that a new process is needed; the child inherits things from its parent (vars and settings) which we call an environment but then is pretty much on its own.
+
+Unline in linux, win processes can operate independently of their parents
+
+Example: can start notepad from Powershall with notepad.exe; PS is the parent, but if you close it, notepad keeps running
+
+taskkill /pid 5856 - pid = process id, followed by the pid of the process you want to kill
+
+Reading processes
+Can use TaskManager  - taskmgr.exe - open with CTRL SHFT ESC
+Get PID under Details tab
+
+In CMD, use tasklist to see all processes
+
+Using PS to read processes
+Get-Process without args to see all
+
+Get-Process
+   [[-Name] <String[]>]
+   [-ComputerName <String[]>]
+   [-Module]
+   [-FileVersionInfo]
+   [<CommonParameters>]
+
+Signals - A way to tell a process that something has just happened - can generate from keyboard or from other processes and software
+
+SIGINT - signal interrupt
+CTRL C often used in Windows to interrupt a process
+
+Process Explorer is a utility Microsoft created to let IT support specialist, systems administrators and other users look at running processes. Doesn't ship with Windows but can be installed for free. Presents a gui of processes with a structure to show parent/child relationships, detailed info on processes, what files they use, etc AND of course you can right click on a process and see actions to take - Kill Process, Kill Process tree (takes out descendents too)
+
+Resource Monitoring Tool
+PS - Get-Process - shows process list with columns like NPM(K) or non-page memory in Kb
+Get-Process | Sort CPU -descending | Select -first 3 -Property ID ProcessName CPU
+ie show the top three CPU hogs and show only the 3 processes listed at the end of the command
+
+============================
+LINUX
+Also parent child - lsss /etc/some_file | grep Hello - less is parent to grep
+On boot, kernel creates a process called init w/PID of 1
+Processes generally terminate when done, releasing resources back to the kernel
+
+Reading processes
+ps -x - ps for list processes, x to lift a restriction that says process must have a TTY to see all
+
+    PID TTY      STAT   TIME COMMAND
+   2873 ?        Ss     0:01 /lib/systemd/systemd --user
+   2874 ?        S      0:00 (sd-pam)
+
+TTY - the terminal
+STAT - R=running, T=stopped, S - interruptible sleep (waiting for an event to restart and continue)
+
+ps -ef - Get all processes, even those run by other users - e for all, f for full format
+
+UID          PID    PPID  C STIME TTY          TIME CMD
+root           1       0  0 May31 ?        00:00:10 /sbin/init splash
+root           2       0  0 May31 ?        00:00:00 [kthreadd]
+
+PPID is parent process id, C is the number of children this process has
+
+ps -ef | grep Chrome - to see all processes running that have the name Chrome in them
+
+Another way - ls -l /proc - Everything in linux is a file and here we list the files in proc
+Or to look at more info - cat /proc/2911/status - 2911 is a pid and also the subdir where the status info lives
+
+ls doesn't help with troubleshooting so continue to us ps
+top shows updated (live?) process info
+
+Signals - SIGINT with CTRL C
+terminate with kill <pid> - sends SIGTERM w/ch gives it time to clean up
+SIGKILL gives no time for cleanup - kill -KILL <pid>
+SIGTSTP - Terminal stop, which suspends - kill -TSTP <pid> OR CTRL Z
+SIGCONT - continue - kill -CONT <pid>
+
+top - %CPU and %MEM columns reveal potential memory hogs
+uptime - shows information about the current time, how long your system's been running, how many users are logged on, and what the load average of your machine is.
+uptime  
+ 11:36:38 up 1 day, 17:41,  1 user,  load average: 1.39, 1.07, 0.96 - The last three are load avg for 1, 5, 15 minutes
+ 
+lsof - list open files and what processes are using them
+
+Mobile
+Apps in the background (not presently on the screen) are often suspended, and don't need to be closed (in fact, closing and reopening can use more power than simply leaving them on in the background)
+
+taskkill /F /PID 6012
+taskkill /F /PID 
