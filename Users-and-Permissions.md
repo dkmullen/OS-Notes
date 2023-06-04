@@ -37,7 +37,7 @@ Simple permissions which we have been using are actually groups of Special Permi
 - Has admins and regular users but also the root or super user
 - sudo
 - sudo su - (substitute user, which defaults to root if you don't specify; essentially logging in as root, to keep from typing sudo)
-- cat /etc/groups to see members of groups - `sudo:x:27:dkmullen` - group name:pwd (encrypted, defaults to root):uid:username
+- cat /etc/group to see members of groups - `sudo:x:27:dkmullen` - group name:pwd (encrypted, defaults to root):uid:username
 - cat /etc/passwd to see users - `root:x:0:0:root:/root:/bin/bash - username:pwd:uid`
 - passwd dkmullen - to change pwd - pwds are encrypted and stored in etc/shadow
 - sudo passwd -e dkmullen (sets pw to immediately expire (-e) and user has to change at next logon
